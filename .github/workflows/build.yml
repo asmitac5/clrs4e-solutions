@@ -7,15 +7,17 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup TeXLive and compile document
-        uses: xu-cheng/texlive-action/full@v1
+        uses: xu-cheng/texlive-action@v2
         with:
+          texlive_version: 2023
           run: |
             apk add file sudo coreutils
             chmod +x scripts/install_fonts.sh
             scripts/install_fonts.sh
+            cat mtpro2-texlive.sh.log
             latexmk -pdf -file-line-error -halt-on-error -interaction=nonstopmode clrs4e-solutions.tex
 
       - name: Release
